@@ -1,0 +1,84 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"> 
+<head> 
+<title>Newsstandアプリを新規登録</title> 
+    <meta http-equiv="Content-Type" content="text/html charset=shift_jis"> 
+    <meta http-equiv="Content-Style-Type" content="text/css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="/static/assets/css/jquery.mobile.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/main.css" />
+     
+<style type="text/css"> 
+      body {
+        padding: 20px;
+      }
+</style>
+<script type="text/javascript" charset="UTF-8">
+</script>
+
+</head> 
+<body>
+<h2>新しいアプリを登録する</h2>
+<h1>{{r}}</h1>
+<div>
+ 新しく集計したいNewsstandアプリの登録を行います。<br />
+ 登録は、新しく登録するアプリの「AppleReport」をアップロードすることで完了します。手順は次の通りです。
+ <hr>
+ <dl class="dl-horizontal">
+  <dt>AppleReportを抽出</dt>
+    <dd>新規に登録したいアプリのAppleレポートだけをまず抽出します（ns_及びIAY）。</dd>
+  <dt>日本円のものだけにする</dt>
+    <dd>海外通貨が混じると計算しづらいので、JPYの決済のものだけ残します。</dd>
+  <dt>重複する行を削除する</dt>
+    <dd>エクセルの「重複している行を削除」で、<strong><em>SKU</em></strong>の値で重複しているものを削除します。</dd>
+  <dt>csvで保存</dt>
+    <dd>エクセルの「ファイルを別名で保存」を使って、そのファイルを<strong><em>csv形式で保存</em></strong>します。</dd>
+  <dt>アップロード</dt>
+    <dd>下の新規登録ボタンを押して、そのcsvファイルをアップロードします。</dd>
+ </dl>
+ <hr />
+</div>
+<form method="post" action="/register/" enctype="multipart/form-data">
+<input type="file" name="file" value="ファイル選択">
+<input type="submit" class="btn" value="新規登録">
+</form>
+<h2>{{try}}</h2>
+<h4>{{e.message}}</h4>
+<hr />
+{%if POST%}
+ <h3>{{r}}の読み込みを完了しました</h3>
+ <h3>New Application SKU</h3>
+ <table class="table table-striped">
+  <tbody>
+    {% for e in NewSKUlist %}
+      <tr class="success"><td>{{e.SKU}}</td><td>{{e.price}}</td><td>{{e.ParentIdentifier}}</td><td>{{e.AppleID}}</td></tr>
+    {% endfor %}
+  </tbody>
+ </table>
+ <hr>
+ <hr>  
+ <h3>All Application SKU List</h3>
+ <table class="table table-striped table-condensed">
+  <thead>
+    <tr><td>SKU</td><td>Price</td><td>Parent Identifer</td><td>AppleID</td></tr>
+  </thead>
+  <hr>
+  <tbody>
+    {% for e in SKUlist %}
+      <tr><td>{{e.SKU}}</td><td>{{e.price}}</td><td>{{e.ParentIdentifier}}</td><td>{{e.AppleID}}</td></tr>
+    {% endfor %}
+  </tbody>
+ </table>
+
+{% endif %}
+  <hr>
+  <a class="btn btn-large" href="/">トップに戻る</a>
+
+<!-- For Script -->
+<script src="/static/assets/js/jquery.min.js"></script>
+<script src="/static/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/main.js"></script>
+</body> 
+</html>

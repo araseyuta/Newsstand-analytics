@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"> 
+<head> 
+<title>Newsstand集計：売上 / 個数</title> 
+    <meta http-equiv="Content-Type" content="text/html charset=shift_jis"> 
+    <meta http-equiv="Content-Style-Type" content="text/css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="/static/assets/css/jquery.mobile.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/main.css" />
+     
+<style type="text/css"> 
+      body {
+        padding: 20px;
+      }
+</style>
+<script type="text/javascript" charset="UTF-8">
+</script>
+
+</head> 
+<body>
+<h2>(アイテム別)&(新規継続別)に計算する</h2>
+<hr>
+<form method="post" action="/sales/" enctype="multipart/form-data">
+<input type="file" name="file" value="ファイル選択">
+<input type="submit" class="btn" value="集計開始">
+<h2>{{try}}</h2>
+<h4>{{e.message}}</h4>
+</form>
+<hr>
+{% if POST %}
+使用したファイル名：{{r}}<br />
+<table class="table table-striped">
+<thead>
+ <tr><td>SKU</td><td>新規/継続</td><td>Price</td><td>Units</td></tr>
+</thead>
+<hr>
+<tbody>
+{% for SKU , e in NS %}
+ <tr><td>{{SKU}}New</td><td>新規</td><td>{{e.New.price}}</td><td>{{e.New.units}}</td></tr>
+ <tr><td>{{SKU}}Renewal</td><td>継続</td><td>{{e.Renewal.price}}</td><td>{{e.Renewal.units}}</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+<a class="btn btn-info" href="/">トップに戻る</a>
+<!-- For Script -->
+<script src="/static/assets/js/jquery.min.js"></script>
+<script src="/static/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/main.js"></script>
+</body> 
+</html>
